@@ -53,6 +53,60 @@ void afficherAnimaux() {
     }
 }
 
+void modifierAnimal() {
+    int id;
+    printf("Entrer l'ID a modifier: ");
+    scanf("%d", &id);
+
+    int choix;
+    for (int i = 0; i < total; i++) {
+        if (zoo[i].id == id) {
+            break; 
+        }
+    }
+
+    if (i == total) {
+        printf("Animal non trouve!\n");
+        return;
+    }
+
+    printf("1. Modifier habitat\n2. Modifier age\nVotre choix: ");
+    scanf("%d", &choix);
+
+    if (choix == 1) {
+        printf("Nouveau habitat: ");
+        scanf("%s", zoo[i].habitat);
+    } else if (choix == 2) {
+        printf("Nouvel age: ");
+        scanf("%d", &zoo[i].age);
+    }
+
+    printf("✅ Modification faite!\n");
+}
+
+void supprimerAnimal() {
+    int id;
+    printf("Entrer ID a supprimer: ");
+    scanf("%d", &id);
+
+    int found = -1;
+    for (int i = 0; i < total; i++) {
+        if (zoo[i].id == id) { found = i; break; }
+    }
+    if (found == -1) {
+        printf("Animal non trouve!\n");
+        return;
+    }
+
+    for (int i = found; i < total - 1; i++) {
+        zoo[i] = zoo[i + 1];
+        zoo[i].id = i + 1;
+    }
+    total--;
+    printf("✅ Animal supprime!\n");
+}
+
+
 
 int main() {
     int choix;
