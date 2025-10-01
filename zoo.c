@@ -11,27 +11,48 @@ struct Animal {
 };
 
 void ajouterAnimal() {
-    struct Animal a;
-    a.id = total + 1;
+    char choix = 'o';
+    while (choix == 'o' || choix == 'O') {
+        struct Animal a;
+        a.id = total + 1;
 
-    printf("Nom : ");
-    scanf("%s", a.nom);
+        printf("Nom: ");
+        scanf("%s", a.nom);
 
-    printf("Espece : ");
-    scanf("%s", a.espece);
+        printf("Espece: ");
+        scanf("%s", a.espece);
 
-    printf("Age : ");
-    scanf("%d", &a.age);
+        printf("Age: ");
+        scanf("%d", &a.age);
 
-    printf("Habitat : ");
-    scanf("%s", a.habitat);
+        printf("Habitat: ");
+        scanf("%s", a.habitat);
 
-    printf("Poids : ");
-    scanf("%f", &a.poids);
+        printf("Poids: ");
+        scanf("%f", &a.poids);
 
-    zoo[total++] = a;
-    printf("✅ Animal ajouté avec succès!\n");
+        zoo[total++] = a;
+        printf("✅ Animal ajoute avec succes!\n");
+
+        printf("Voulez-vous ajouter un autre animal? (o/n): ");
+        scanf(" %c", &choix);
+    }
 }
+
+
+void afficherAnimaux() {
+    if (total == 0) {
+        printf("Aucun animal enregistre!\n");
+        return;
+    }
+    printf("\n--- Liste des animaux ---\n");
+    for (int i = 0; i < total; i++) {
+        printf("%d | %s | %s | %d ans | %s | %.2f kg\n",
+               zoo[i].id, zoo[i].nom, zoo[i].espece,
+               zoo[i].age, zoo[i].habitat, zoo[i].poids);
+    }
+}
+
 
 int main() {
     int choix;
