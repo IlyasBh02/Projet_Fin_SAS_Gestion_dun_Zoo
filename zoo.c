@@ -91,7 +91,8 @@ void afficherAnimaux() {
                 if (strcmp(tmp[j].nom, tmp[j+1].nom) > 0) {
                     struct Animal t = tmp[j]; tmp[j] = tmp[j+1]; tmp[j+1] = t;
                 }
-        for (int i = 0; i < total; i++) afficherUnAnimal(tmp[i]);
+        for (int i = 0; i < total; i++) 
+        afficherUnAnimal(tmp[i]);
     }
     else if (choix == 3) {
         struct Animal tmp[MAX];
@@ -201,15 +202,28 @@ void rechercherAnimal() {
 }
 
 void statistiques() {
-    if (total==0){ printf("❌ Zoo vide!\n"); return; }
+    if (total==0){ 
+        printf("❌ Zoo vide!\n"); 
+        return; 
+    }
+
     int somme=0, maxAge=zoo[0].age, minAge=zoo[0].age;
     char vieux[50], jeune[50];
-    strcpy(vieux,zoo[0].nom); strcpy(jeune,zoo[0].nom);
+
+    strcpy(vieux,zoo[0].nom); 
+    strcpy(jeune,zoo[0].nom);
 
     for (int i=0;i<total;i++) {
         somme += zoo[i].age;
-        if (zoo[i].age > maxAge) { maxAge=zoo[i].age; strcpy(vieux,zoo[i].nom); }
-        if (zoo[i].age < minAge) { minAge=zoo[i].age; strcpy(jeune,zoo[i].nom); }
+        if (zoo[i].age > maxAge) { 
+            maxAge=zoo[i].age; 
+            strcpy(vieux,zoo[i].nom); 
+        }
+
+        if (zoo[i].age < minAge) { 
+            minAge=zoo[i].age; 
+            strcpy(jeune,zoo[i].nom); 
+        }
     }
 
     printf("Nombre total: %d\n", total);
@@ -217,17 +231,24 @@ void statistiques() {
     printf("Plus vieux: %s (%d ans)\n", vieux, maxAge);
     printf("Plus jeune: %s (%d ans)\n", jeune, minAge);
 
-    // espece la plus fréquente
-    int maxCount=0; char espMax[30];
+
+    int maxCount=0; 
+    char espMax[30];
+
     for (int i=0;i<total;i++) {
         int count=0;
-        for (int j=0;j<total;j++) if(strcmp(zoo[i].espece,zoo[j].espece)==0) count++;
-        if (count > maxCount) { maxCount = count; strcpy(espMax,zoo[i].espece); }
+
+        for (int j=0;j<total;j++) 
+        if(strcmp(zoo[i].espece,zoo[j].espece)==0) 
+        count++;
+
+        if (count > maxCount) { 
+            maxCount = count; 
+            strcpy(espMax,zoo[i].espece); }
     }
     printf("Espece la plus representee: %s (%d)\n", espMax, maxCount);
 }
 
-// MAIN
 int main() {
     int choix;
     do {
