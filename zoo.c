@@ -48,14 +48,14 @@ int Alpha(char str[]) {
     return 1;
 }
 
-void afficherUnAnimal(struct Animal a) {
+void afficherAnimal(struct Animal a) {
     printf("%d | %s | %s | %d ans | %s | %.2f kg\n",
            a.id, a.nom, a.espece, a.age, a.hobit, a.poids);
 }
 
 void ajouterAnimal() {
-    char choix = 'o';
-    while (choix == 'o' || choix == 'O') {
+    char choix = 'y';
+    while (choix == 'y' || choix == 'Y') {
         struct Animal a;
         a.id = nextID++;
 
@@ -74,13 +74,13 @@ void ajouterAnimal() {
         } while (!Alpha(a.espece));
 
         do {
-            printf("Age (>=0): ");
+            printf("Age : ");
             scanf("%d", &a.age);
             if (a.age < 0)
                 printf("Age invalide! Entrez un nombre positif.\n");
         } while (a.age < 0);
 
-        int habChoix;
+        int hobChoix;
         do {
             printf("Choisissez l'hobit :\n");
             printf("1. Savannah\n");
@@ -90,9 +90,9 @@ void ajouterAnimal() {
             printf("5. Antarctica\n");
             printf("6. Wetlands\n");
             printf("Votre choix: ");
-            scanf("%d", &habChoix);
+            scanf("%d", &hobChoix);
 
-            switch(habChoix) {
+            switch(hobChoix) {
                 case 1: strcpy(a.hobit, "Savannah"); 
                 break;
                 case 2: strcpy(a.hobit, "Jungle");
@@ -104,12 +104,12 @@ void ajouterAnimal() {
                 case 6: strcpy(a.hobit, "Wetlands"); break;
                 default: 
                     printf("Choix invalide!\n"); 
-                    habChoix = 0;
+                    hobChoix = 0;
             }
-        } while (habChoix < 1 || habChoix > 6);
+        } while (hobChoix < 1 || hobChoix > 6);
 
         do {
-            printf("Poids (>0): ");
+            printf("Poids : ");
             scanf("%f", &a.poids);
             if (a.poids <= 0)
                 printf("Poids invalide! Entrez un nombre > 0.\n");
@@ -119,7 +119,7 @@ void ajouterAnimal() {
         zoo[total++] = a;
         printf("Animal ajouté avec succès!\n");
 
-        printf("Voulez-vous ajouter un autre animal? (o/n): ");
+        printf("Voulez-vous ajouter un autre animal? (Y/N): ");
         scanf(" %c", &choix);
     }
 }
@@ -140,7 +140,8 @@ void afficherAnimaux() {
     scanf("%d", &choix);
 
     if (choix == 1) {
-        for (int i = 0; i < total; i++) afficherUnAnimal(zoo[i]);
+        for (int i = 0; i < total; i++) 
+        afficherAnimal(zoo[i]);
     }
 
 
@@ -151,13 +152,15 @@ void afficherAnimaux() {
         for (int i = 0; i < total-1; i++)
             for (int j = 0; j < total-i-1; j++) 
                 if (strcmp(tmp[j].nom, tmp[j+1].nom) > 0) {
-                    struct Animal t = tmp[j]; tmp[j] = tmp[j+1]; tmp[j+1] = t;
+                    struct Animal t = tmp[j]; 
+                    tmp[j] = tmp[j+1]; 
+                    tmp[j+1] = t;
                 }
         for (int i = 0; i < total; i++) 
-            afficherUnAnimal(tmp[i]);
+            afficherAnimal(tmp[i]);
     }
 
-                                                                                   //SB
+//STB
     
     else if (choix == 3) {
 
@@ -172,19 +175,20 @@ void afficherAnimaux() {
                     tmp[j+1] = t;
                 }
         for (int i = 0; i < total; i++) 
-        afficherUnAnimal(tmp[i]);
+        afficherAnimal(tmp[i]);
     }
     else if (choix == 4) {
 
-        char hab[30]; 
+        char hob[30]; 
         int found = 0;
         
         printf("hobit: "); 
-        scanf("%s", hab);
+        scanf("%s", hob);
         
         for (int i = 0; i < total; i++)
-            if (strcmp(zoo[i].hobit, hab) == 0) {
-                afficherUnAnimal(zoo[i]); found = 1;
+            if (strcmp(zoo[i].hobit, hob) == 0) {
+                afficherAnimal(zoo[i]); 
+                found = 1;
             }
         if (!found) 
         printf("Aucun animal dans cet hobit!\n");
@@ -199,7 +203,9 @@ void modifierAnimal() {
     scanf("%d", &id);
     
     for (int i = 0; i < total; i++) 
-        if (zoo[i].id == id) break;
+        if (zoo[i].id == id) 
+        break;
+        
         if (i == total) { 
         printf("Animal didn't found !!\n"); 
         return; 
@@ -207,25 +213,32 @@ void modifierAnimal() {
 
     printf("1. Modifier hobit\n2. Modifier age\nVotre choix: ");
     scanf("%d", &choix);
-    if (choix == 1) { printf("Nouveau hobit: "); 
+    if (choix == 1) { 
+        printf("Nouveau hobit: "); 
         scanf("%s", zoo[i].hobit); 
     }
-    else if (choix == 2) { printf("Nouvel age: "); 
+    
+    else if (choix == 2) { 
+        printf("Nouvel age: "); 
         scanf("%d", &zoo[i].age); 
     }
+    
     printf("Modification faite!\n");
 }
 
 void supprimerAnimal() {
     int id, found=-1;
 
-    printf("ID a supprimer: "); scanf("%d", &id);
+    printf("ID a supprimer: "); 
+    scanf("%d", &id);
 
     for (int i = 0; i < total; i++) 
     if (zoo[i].id == id) { 
-        found=i; break; }
+        found=i; 
+        break; }
 
-    if (found == -1) { printf("Animal non trouve!\n"); 
+    if (found == -1) { 
+        printf("Animal non trouve!\n"); 
         return; 
     }
 
@@ -251,8 +264,9 @@ void rechercherAnimal() {
         printf("ID: "); 
         scanf("%d", &id);
         
-        for (int i=0;i<total;i++) if(zoo[i].id==id){ 
-            afficherUnAnimal(zoo[i]); 
+        for (int i = 0 ; i < total ; i++ ) 
+            if(zoo[i].id == id){ 
+            afficherAnimal(zoo[i]); 
             return; 
         }
         printf("Animal non trouve!\n");
@@ -266,9 +280,9 @@ void rechercherAnimal() {
         printf("Nom: "); 
         scanf("%s", nom);
         
-        for (int i=0;i<total;i++) 
+        for (int i = 0 ; i < total ; i++ ) 
         if(strcmp(zoo[i].nom,nom)==0){ 
-            afficherUnAnimal(zoo[i]); found=1; 
+            afficherAnimal(zoo[i]); found=1; 
         }
         if (!found) 
         printf("Animal non trouve!\n");
@@ -281,8 +295,11 @@ void rechercherAnimal() {
         printf("Espece: "); 
         scanf("%s", esp);
         
-        for (int i=0;i<total;i++) 
-        if(strcmp(zoo[i].espece,esp)==0){ afficherUnAnimal(zoo[i]); found=1; }
+        for (int i = 0 ; i < total ; i++ ) 
+        if(strcmp(zoo[i].espece,esp)==0){ 
+            afficherAnimal(zoo[i]); 
+            found=1; 
+        }
         if (!found) 
         printf("Aucun animal a cette espece!\n");
     }
@@ -322,10 +339,10 @@ void statistiques() {
     int maxCount=0; 
     char espMax[30];
 
-    for (int i=0;i<total;i++) {
+    for (int i = 0 ; i < total ; i++ ) {
         int count=0;
 
-        for (int j=0;j<total;j++) 
+        for (int j = 0 ; j < total ; j++ ) 
         if(strcmp(zoo[i].espece,zoo[j].espece)==0) 
         count++;
 
