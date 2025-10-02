@@ -9,7 +9,7 @@ struct Animal {
     char nom[50];
     char espece[30];
     int age; 
-    char habitat[30];
+    char hobit[30];
     float poids;
 };
 
@@ -35,10 +35,12 @@ struct Animal zoo[MAX] = {
     {19, "Crocodile", "Crocodylus", 20, "Swamp", 1000.0},
     {20, "Ostrich", "Struthio", 4, "Desert", 130.0}
 };
+
+
 int total = 20;
 int nextID = 21;
 
-int estAlphabetique(char str[]) {
+int Alpha(char str[]) {
     for (int i = 0; str[i] != '\0'; i++) {
         if (!isalpha(str[i]))
             return 0;
@@ -48,7 +50,7 @@ int estAlphabetique(char str[]) {
 
 void afficherUnAnimal(struct Animal a) {
     printf("%d | %s | %s | %d ans | %s | %.2f kg\n",
-           a.id, a.nom, a.espece, a.age, a.habitat, a.poids);
+           a.id, a.nom, a.espece, a.age, a.hobit, a.poids);
 }
 
 void ajouterAnimal() {
@@ -60,27 +62,27 @@ void ajouterAnimal() {
         do {
             printf("Nom: ");
             scanf("%s", a.nom);
-            if (!estAlphabetique(a.nom))
+            if (!Alpha(a.nom))
                 printf("Nom invalide! Entrez uniquement des lettres.\n");
-        } while (!estAlphabetique(a.nom));
+        } while (!Alpha(a.nom));
 
         do {
             printf("Espece: ");
             scanf("%s", a.espece);
-            if (!estAlphabetique(a.espece))
+            if (!Alpha(a.espece))
                 printf("Espece invalide! Entrez uniquement des lettres.\n");
-        } while (!estAlphabetique(a.espece));
+        } while (!Alpha(a.espece));
 
         do {
             printf("Age (>=0): ");
             scanf("%d", &a.age);
             if (a.age < 0)
-                printf("❌Age invalide! Entrez un nombre positif.\n");
+                printf("Age invalide! Entrez un nombre positif.\n");
         } while (a.age < 0);
 
         int habChoix;
         do {
-            printf("Choisissez l'habitat :\n");
+            printf("Choisissez l'hobit :\n");
             printf("1. Savannah\n");
             printf("2. Jungle\n");
             printf("3. Forest\n");
@@ -91,15 +93,15 @@ void ajouterAnimal() {
             scanf("%d", &habChoix);
 
             switch(habChoix) {
-                case 1: strcpy(a.habitat, "Savannah"); 
+                case 1: strcpy(a.hobit, "Savannah"); 
                 break;
-                case 2: strcpy(a.habitat, "Jungle");
+                case 2: strcpy(a.hobit, "Jungle");
                  break;
-                case 3: strcpy(a.habitat, "Forest"); break;
-                case 4: strcpy(a.habitat, "Desert"); break;
-                case 5: strcpy(a.habitat, "Antarctica"); 
+                case 3: strcpy(a.hobit, "Forest"); break;
+                case 4: strcpy(a.hobit, "Desert"); break;
+                case 5: strcpy(a.hobit, "Antarctica"); 
                 break;
-                case 6: strcpy(a.habitat, "Wetlands"); break;
+                case 6: strcpy(a.hobit, "Wetlands"); break;
                 default: 
                     printf("Choix invalide!\n"); 
                     habChoix = 0;
@@ -133,7 +135,7 @@ void afficherAnimaux() {
     printf("1. Liste complete\n");
     printf("2. Trier par nom\n");
     printf("3. Trier par age\n");
-    printf("4. Afficher par habitat\n");
+    printf("4. Afficher par hobit\n");
     printf("Votre choix: ");
     scanf("%d", &choix);
 
@@ -144,6 +146,7 @@ void afficherAnimaux() {
 
     else if (choix == 2) {
         struct Animal tmp[MAX];
+
         for (int i = 0; i < total; i++) tmp[i] = zoo[i];
         for (int i = 0; i < total-1; i++)
             for (int j = 0; j < total-i-1; j++) 
@@ -176,15 +179,15 @@ void afficherAnimaux() {
         char hab[30]; 
         int found = 0;
         
-        printf("Habitat: "); 
+        printf("hobit: "); 
         scanf("%s", hab);
         
         for (int i = 0; i < total; i++)
-            if (strcmp(zoo[i].habitat, hab) == 0) {
+            if (strcmp(zoo[i].hobit, hab) == 0) {
                 afficherUnAnimal(zoo[i]); found = 1;
             }
         if (!found) 
-        printf("Aucun animal dans cet habitat!\n");
+        printf("Aucun animal dans cet hobit!\n");
     }
 }
 
@@ -195,17 +198,17 @@ void modifierAnimal() {
     printf("ID a modifier: "); 
     scanf("%d", &id);
     
-    for (i = 0; i < total; i++) 
+    for (int i = 0; i < total; i++) 
         if (zoo[i].id == id) break;
         if (i == total) { 
-        printf("Animal non trouve!\n"); 
+        printf("Animal didn't found !!\n"); 
         return; 
     }
 
-    printf("1. Modifier habitat\n2. Modifier age\nVotre choix: ");
+    printf("1. Modifier hobit\n2. Modifier age\nVotre choix: ");
     scanf("%d", &choix);
-    if (choix == 1) { printf("Nouveau habitat: "); 
-        scanf("%s", zoo[i].habitat); 
+    if (choix == 1) { printf("Nouveau hobit: "); 
+        scanf("%s", zoo[i].hobit); 
     }
     else if (choix == 2) { printf("Nouvel age: "); 
         scanf("%d", &zoo[i].age); 
@@ -348,14 +351,18 @@ int main() {
         scanf("%d", &choix);
 
         switch(choix) {
-            case 1: ajouterAnimal(); break;
-            case 2: afficherAnimaux(); break;
-            case 3: modifierAnimal(); break;
-            case 4: supprimerAnimal(); break;
+            case 1: ajouterAnimal(); 
+            break;
+            case 2: afficherAnimaux(); 
+            break;
+            case 3: modifierAnimal(); 
+            break;
+            case 4: supprimerAnimal(); 
+            break;
             case 5: rechercherAnimal(); break;
             case 6: statistiques(); break;
-            case 0: printf("Au revoir!\n"); break;
-            default: printf("Choix invalide!\n");
+            case 0: printf("See uu!\n"); break;
+            default: printf("Erreur 404 !!\n");
         }
     } while(choix != 0);
     return 0;
